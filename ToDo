@@ -1,0 +1,26 @@
+---Misc---
+**Update the public folder contents (ask for logos/assets)
+    https://create-react-app.dev/docs/using-the-public-folder/
+
+
+---UI---
+**Add/test breakpoints
+    https://material-ui.com/customization/breakpoints/#breakpoints
+
+**Validate Auth forms
+    https://github.com/jquense/yup
+    https://formik.org/
+
+**React Router--Single Switch instead of Auth/App Stack.
+    Name file "Routes.js", merge stack Switch components, use private routes
+    https://reactrouter.com/web/guides/quick-start
+
+
+---Firebase---
+Incorporate custom token into firestore and storage rules
+Format database with generated IDs
+
+---Functionality---
+add files to firestore files structure and storage
+download files from storage
+
