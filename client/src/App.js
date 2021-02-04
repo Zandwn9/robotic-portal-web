@@ -1,12 +1,7 @@
-import { useContext } from "react";
-
-import { AuthContext } from "./context/AuthProvider";
-import AuthStack from "./AuthStack";
-import AppStack from "./AppStack";
+import Router from "./Router";
 
 function App() {
-  const { user } = useContext(AuthContext);
-  return user ? <AppStack /> : <AuthStack />;
+  return <Router />;
 }
 
 export default App;
