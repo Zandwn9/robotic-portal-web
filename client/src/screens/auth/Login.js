@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Grid, Box, ButtonGroup, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import { loginWithEmail } from "../../firebase/auth";
@@ -9,6 +9,7 @@ import LogoContainer from "../../components/LogoContainer";
 import AppLink from "../../components/AppLink";
 import * as Yup from "yup";
 import Form from "../../components/form";
+import { AuthContext } from "../../context/AuthProvider";
 
 export default function Login() {
   const validationSchema = Yup.object().shape({
@@ -22,12 +23,12 @@ export default function Login() {
   const initialValues = { email: "", password: "" };
   const history = useHistory();
   const [loginError, setLoginError] = useState("");
-
+  const { setUser } = useContext(AuthContext);
   function handleOnLogin(values) {
     const { email, password } = values;
     loginWithEmail(email, password)
-      .then((token) => {
-        console.log(token);
+      .then((user) => {
+        setUser(user);
         history.push("/");
       })
       .catch((e) => {

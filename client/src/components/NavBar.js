@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Toolbar,
   AppBar,
@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Menu } from "@material-ui/icons";
 import { logout } from "../firebase/auth";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function NavBar({ title }) {
+  const { setUser } = useContext(AuthContext);
   const history = useHistory();
   const classes = useStyles();
   return (
@@ -43,6 +45,7 @@ export default function NavBar({ title }) {
           color="inherit"
           onClick={() => {
             logout().then(() => {
+              setUser(null);
               history.push("/");
             });
           }}

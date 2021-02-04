@@ -4,31 +4,33 @@ import axios from "axios";
 import { clientsCollection } from "./firestore/clients";
 
 const getCustomToken = (credential) => {
-  credential.user.getIdToken(true).then((idToken) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_API}/createToken`,
-        JSON.stringify({ data: {} }),
-        {
-          headers: {
-            Authorization: `Bearer ${idToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        firebase
-          .auth()
-          .signInWithCustomToken(res.data.result.customToken)
-          .then(() => {
-            console.log("logged in");
-          })
-          .catch((error) => {
-            console.log(error.code);
-            console.log(error.message);
-          });
-      })
-      .catch((err) => console.log(err.message));
+  return new Promise((resolve, reject) => {
+    credential.user.getIdToken(true).then((idToken) => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API}/createToken`,
+          JSON.stringify({ data: {} }),
+          {
+            headers: {
+              Authorization: `Bearer ${idToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((res) => {
+          firebase
+            .auth()
+            .signInWithCustomToken(res.data.result.customToken)
+            .then((userCredential) => {
+              resolve(userCredential.user);
+            })
+            .catch((error) => {
+              console.log(error.code);
+              reject({ success: false, message: error.message });
+            });
+        })
+        .catch((err) => console.log(err.message));
+    });
   });
 };
 
